@@ -197,10 +197,17 @@ internal sealed class PingRService : BackgroundService
 
         if (foundDomain.CheckCertificateExpiry)
         {
+            // If the last check was done before the check interval is expired, do nothing.
+            if (!foundDomain.LastCertificateExpiryCheckTimestamp.IsExpired(foundDomain.CertificateExpiryCheckInterval))
+            {
+                return sslErrors == SslPolicyErrors.None;
+            }
+
             // Check certificate for expiry.
             if (certificate.NotAfter.IsExpired())
             {
                 this.Logger.Error("The certificate with issuer {Issuer} is expired at {ExpiryDate}", certificate.Issuer, certificate.NotAfter);
+                foundDomain.LastCertificateExpiryCheckTimestamp = DateTimeOffset.Now;
                 return sslErrors == SslPolicyErrors.None;
             }
 
@@ -208,6 +215,12 @@ internal sealed class PingRService : BackgroundService
             if ((certificate.NotAfter - DateTime.Now) < TimeSpan.FromDays(30))
             {
                 this.Logger.Warning("The certificate with issuer {Issuer} is about to expiry: {ExpiryDate}", certificate.Issuer, certificate.NotAfter);
+                foundDomain.LastCertificateExpiryCheckTimestamp = DateTimeOffset.Now;
+            }
+            else
+            {
+                // Do nothing, but set the timestamp.
+                foundDomain.LastCertificateExpiryCheckTimestamp = DateTimeOffset.Now;
             }
         }
 

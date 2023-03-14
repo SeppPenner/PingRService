@@ -35,6 +35,16 @@ public sealed class DomainToCheck
     public bool CheckCertificateExpiry { get; set; }
 
     /// <summary>
+    /// Gets or sets the certificate expiry check interval.
+    /// </summary>
+    public TimeSpan CertificateExpiryCheckInterval { get; set; } = TimeSpan.Zero;
+
+    /// <summary>
+    /// Gets or sets the last certificate expiry check timestamp.
+    /// </summary>
+    public DateTimeOffset LastCertificateExpiryCheckTimestamp { get; set; } = DateTimeOffset.MinValue;
+
+    /// <summary>
     /// Gets a value indicating whether the configuration is valid or not.
     /// </summary>
     /// <returns>A <see cref="bool"/> value indicating whether the configuration is valid or not.</returns>
@@ -53,6 +63,11 @@ public sealed class DomainToCheck
         if (string.IsNullOrWhiteSpace(this.InstanceKey))
         {
             throw new ConfigurationException("The instance key is empty.");
+        }
+
+        if (this.CheckCertificateExpiry && this.CertificateExpiryCheckInterval == TimeSpan.Zero)
+        {
+            throw new ConfigurationException("The certificate expiry check interval is not set.");
         }
 
         return true;
