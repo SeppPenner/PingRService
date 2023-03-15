@@ -139,7 +139,7 @@ public static class Program
             .Enrich.WithExceptionDetails()
             .Enrich.WithMachineName()
             .WriteTo.Console(outputTemplate: customTemplate)
-            .WriteTo.Telegram(Configuration.TelegramBotToken, Configuration.TelegramChatId);
+            .WriteTo.Telegram(Configuration.TelegramBotToken, Configuration.TelegramChatId, restrictedToMinimumLevel: LogEventLevel.Warning);
 
         if (EnvironmentName != "Development")
         {
