@@ -10,6 +10,20 @@ PingRService is an executable to check the connectivity and certificate expiry d
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://raw.githubusercontent.com/SeppPenner/PingRService/master/License.txt)
 [![Known Vulnerabilities](https://snyk.io/test/github/SeppPenner/PingRService/badge.svg)](https://snyk.io/test/github/SeppPenner/PingRService)
 
+Docker:
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/sepppenner/pingrservice)](https://hub.docker.com/repository/docker/sepppenner/pingrservice)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/sepppenner/pingrservice?sort=date)](https://hub.docker.com/repository/docker/sepppenner/pingrservice)
+[![Docker Stars](https://img.shields.io/docker/stars/sepppenner/pingrservice)](https://hub.docker.com/repository/docker/sepppenner/pingrservice)
+
+Docker (ARM):
+
+[![Docker Pulls](https://img.shields.io/docker/pulls/sepppenner/pingrservice-arm)](https://hub.docker.com/repository/docker/sepppenner/pingrservice-arm)
+[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/sepppenner/pingrservice-arm?sort=date)](https://hub.docker.com/repository/docker/sepppenner/pingrservice-arm)
+[![Docker Stars](https://img.shields.io/docker/stars/sepppenner/pingrservice-arm)](https://hub.docker.com/repository/docker/sepppenner/pingrservice-arm)
+
+## Basic usage
+Check out the how to use file [here](https://github.com/SeppPenner/PingRService/blob/master/HowToUse.md).
 
 Change history
 --------------
