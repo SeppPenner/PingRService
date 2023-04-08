@@ -206,7 +206,7 @@ internal sealed class PingRService : BackgroundService
             // Check certificate for expiry.
             if (certificate.NotAfter.IsExpired())
             {
-                this.Logger.Error("The certificate with instance key {InstanceKey} is expired at {ExpiryDate}", foundDomain.InstanceKey, certificate.NotAfter);
+                this.Logger.Error("The certificate for name {InstanceKey} is expired at {ExpiryDate}", foundDomain.InstanceKey, certificate.NotAfter);
                 foundDomain.LastCertificateExpiryCheckTimestamp = DateTimeOffset.Now;
                 return sslErrors == SslPolicyErrors.None;
             }
@@ -214,7 +214,7 @@ internal sealed class PingRService : BackgroundService
             // If the certificate is short before expiry, warn.
             if ((certificate.NotAfter - DateTime.Now) < TimeSpan.FromDays(30))
             {
-                this.Logger.Warning("The certificate with instance key {InstanceKey} is about to expiry: {ExpiryDate}", foundDomain.InstanceKey, certificate.NotAfter);
+                this.Logger.Warning("The certificate for name {InstanceKey} is about to expire: {ExpiryDate}", foundDomain.InstanceKey, certificate.NotAfter);
                 foundDomain.LastCertificateExpiryCheckTimestamp = DateTimeOffset.Now;
             }
             else
