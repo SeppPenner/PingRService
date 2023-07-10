@@ -9,6 +9,8 @@
 
 namespace PingRService;
 
+using System.Net;
+
 /// <seealso cref="BackgroundService"/>
 /// <inheritdoc cref="BackgroundService"/>
 /// <summary>
@@ -141,7 +143,7 @@ internal sealed class PingRService : BackgroundService
 
             var response = await this.httpClient.SendAsync(httpRequestMessage);
 
-            if (response?.IsSuccessStatusCode is false)
+            if (response?.StatusCode is not null && response.StatusCode >= HttpStatusCode.BadRequest)
             {
                 using var instanceKeyContext = LogContext.PushProperty(LoggingKeys.InstanceKey, domainToCheck.InstanceKey);
 #pragma warning disable Serilog004 // Constant MessageTemplate verifier
