@@ -17,7 +17,8 @@
             }
         ],
         "TelegramBotToken": "111111111:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-        "TelegramChatId": "2222222"
+        "TelegramChatId": "2222222",
+        "HttpUrl": "http://0.0.0.0:5001"
     }
 }
 ```
