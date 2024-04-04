@@ -94,6 +94,11 @@ public static class Program
             {
                 webBuilder.UseContentRoot(currentLocation);
                 webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureKestrel(
+                    options =>
+                    {
+                        options.Listen(Configuration.HttpEndPoint);
+                    });
             })
             .UseSerilog()
             .UseWindowsService()

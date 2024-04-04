@@ -1,9 +1,11 @@
 #pragma warning disable IDE0065 // Die using-Anweisung wurde falsch platziert.
 global using System.Diagnostics;
 global using System.Diagnostics.CodeAnalysis;
+global using System.Net;
 global using System.Net.Security;
 global using System.Reflection;
 global using System.Security.Cryptography.X509Certificates;
+global using System.Text.Json.Serialization;
 
 global using Microsoft.AspNetCore.Builder;
 global using Microsoft.AspNetCore.Hosting;

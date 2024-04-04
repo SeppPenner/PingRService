@@ -15,9 +15,19 @@ namespace PingRService.Configuration;
 public sealed class PingRConfiguration
 {
     /// <summary>
+    /// The constant HTTP url.
+    /// </summary>
+    internal const string HttpUrlConstant = "http://0.0.0.0:5000";
+
+    /// <summary>
+    /// Gets or sets the HTTP url.
+    /// </summary>
+    public string HttpUrl { get; set; } = HttpUrlConstant;
+
+    /// <summary>
     /// Gets or sets the domains to check.
     /// </summary>
-    public List<DomainToCheck> DomainsToCheck { get; set; } = new();
+    public List<DomainToCheck> DomainsToCheck { get; set; } = [];
 
     /// <summary>
     /// Gets or sets the service delay in milliseconds.
@@ -38,6 +48,12 @@ public sealed class PingRConfiguration
     /// Gets or sets the Telegram chat identifier.
     /// </summary>
     public string TelegramChatId { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Gets the HTTP endpoint.
+    /// </summary>
+    [JsonIgnore]
+    public IPEndPoint HttpEndPoint => GetEndpoint(this.HttpUrl, "Http");
 
     /// <summary>
     /// Gets a value indicating whether the configuration is valid or not.
@@ -76,5 +92,33 @@ public sealed class PingRConfiguration
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Converts the given URL <see cref="string"/> to a <see cref="IPEndPoint"/>.
+    /// </summary>
+    /// <param name="url">The url.</param>
+    /// <param name="endpointName">The endpoint.</param>
+    /// <returns>A new <see cref="IPEndPoint"/>.</returns>
+    private static IPEndPoint GetEndpoint(string url, string endpointName)
+    {
+        var httpUrlParts = url.Replace("//", string.Empty).Split(":");
+
+        if (httpUrlParts.Length != 3)
+        {
+            throw new ConfigurationException($"Url for {endpointName} endpoint is invalid.");
+        }
+
+        if (!IPAddress.TryParse(httpUrlParts[1], out var ipAddress))
+        {
+            throw new ConfigurationException($"Url for {endpointName} endpoint is invalid.");
+        }
+
+        if (int.TryParse(httpUrlParts[2], out var port))
+        {
+            return new IPEndPoint(ipAddress, port);
+        }
+
+        throw new ConfigurationException($"Url for {endpointName} endpoint is invalid.");
     }
 }
